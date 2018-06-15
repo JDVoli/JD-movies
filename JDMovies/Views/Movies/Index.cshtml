@@ -1,0 +1,265 @@
+﻿@model IEnumerable<JDMovies.DAL.Film>
+
+@{
+    ViewBag.Title = "Pełna oferta";
+}
+
+    <div class="col pull-m2" style="margin-top:60px">
+
+    <form action="/Movies/Search">
+        Nośnik
+        <p>
+            <label>
+                <input type="checkbox" name="nosnik" value="DVD" />
+                <span>DVD</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="nosnik" value="Blu-Ray" />
+                <span>Blu-Ray</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="nosnik" value="VHS" />
+                <span>VHS</span>
+            </label>
+        </p>
+        <br />
+        Ograniczenia wiekowe
+        <p>
+            <label>
+                <input type="checkbox" name="ogr_wiek" value="3+" />
+                <span>3+</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="ogr_wiek" value="12+" />
+                <span>12+</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="ogr_wiek" value="16+" />
+                <span>16+</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="ogr_wiek" value="18+" />
+                <span>18+</span>
+            </label>
+        </p>
+        <br />
+         Gatunek <br />
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="akcja" />
+                <span>Akcja</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="przygodowy" />
+                <span>Przygodowy</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="animowany" />
+                <span>Animowany</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="serial" />
+                <span>Serial</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="komedia" />
+                <span>Komedia</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="dramat" />
+                <span>Dramat</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="fabularny" />
+                <span>Fabularny</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="thriller" />
+                <span>Thriller</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="fantasy" />
+                <span>Fantasy</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="melodramat" />
+                <span>Melodramat</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="sensacyjny" />
+                <span>Sensacyjny</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="sci-fi" />
+                <span>Sci-Fi</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="western" />
+                <span>Western</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="polityczny" />
+                <span>Polityczny</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="gatunek" value="jd" />
+                <span>JD</span>
+            </label>
+        </p>
+         <button class="btn waves-effect waves-light" type="submit" name="action">
+            Filtruj
+        <i class="material-icons right">filter_list</i>
+         </button>
+
+    </form>
+
+</div>
+
+    <div class="col l10">
+        <h2>FILMY</h2><hr />
+
+        <div class="input-field col l7">
+            <form>
+                <input class="col l10" type="search" placeholder="Jaki tytuł Cię interesuje?" />
+                <button class="waves-effect waves-light btn-floating "><i class="material-icons left">search</i></button>
+            </form>
+        </div>
+
+
+        <div class="input-field col l4 push-l1">
+           
+            <select class="browser-default" >
+                <option value="" disabled selected >Sortuj według</option>
+                <option value="A-Z">Tytuł od A do Z</option>
+                <option value="Z-A">Tytuł od Z do A</option>
+                <option value="Prem_1st">Data premiery od najnowszego</option>
+                <option value="Prems_last">Data premiery od najstarszego</option>
+            </select>
+
+        </div>
+
+
+
+
+        @*@using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.Tytul);
+                </div>
+            </div>
+        }*@
+
+        @*<p>
+            @Html.ActionLink("Create New", "Create")
+        </p>*@
+
+        <table class="table">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @{
+                        if (item.Zdjecie != null)
+                        {
+                            <td>
+                                @{
+                                    var base64 = Convert.ToBase64String(item.Zdjecie);
+                                    var imgsrc = string.Format("data:image/jpeg;base64,{0}", base64);
+                                }
+                                <img src='@imgsrc' />
+                            </td>
+                        }
+                    }
+
+                            <td>
+                                <p style="font-size: 40px;font-weight:bold">
+                                    @Html.DisplayFor(modelItem => item.Tytul)
+                                </p>
+                                <p>
+                                    @Html.DisplayName("Data premiery: ")
+                                    @Html.DisplayFor(modelItem => item.Data_premiery)<br />
+                                </p>
+                                <p>
+                                    @Html.DisplayName("Nośnik: ")
+                                    @Html.DisplayFor(modelItem => item.Nosnik)
+                                </p>
+                                <p>
+                                    @Html.DisplayName("Czas trwania: ")
+                                    @Html.DisplayFor(modelItem => item.Czas_trwania)
+                                    @Html.DisplayName("min")
+                                </p>
+
+                                @{
+                                    var st = "";
+                                    if (item.Ogr_wiekowe.Equals("3+"))
+                                    {
+                                        st = "font-size:30px;color:green";
+                                    }
+                                    else if (item.Ogr_wiekowe.Equals("12+"))
+                                    {
+                                        st = "font-size:30px;color:yellow";
+                                    }
+                                    else if (item.Ogr_wiekowe.Equals("16+"))
+                                    {
+                                        st = "font-size:30px;color:orange";
+                                    }
+                                    else
+                                    {
+                                        st = "font-size:30px;color:red";
+                                    }
+
+
+                                }
+
+                                <p style="@st">
+                                    @Html.DisplayFor(modelItem => item.Ogr_wiekowe)
+                                </p>
+
+                                <p >
+                                    @Html.ActionLink("Edytuj", "Edit", new { id = item.ID_filmu }) |
+                                    @Html.ActionLink("Usuń", "Delete", new { id = item.ID_filmu })
+                                </p>
+                            </td>
+                </tr>
+            }
+
+        </table>
+    </div>

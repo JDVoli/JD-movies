@@ -1,0 +1,34 @@
+﻿@model JDMovies.DAL.Film
+
+@{ 
+
+    ViewBag.Title = "Usuń film";
+}
+
+<h2>Usuń film</h2>
+
+<h5>Czy jesteś pewien, że chcesz usunąć ten film?</h5>
+
+<div>
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tytul)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tytul)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_premiery)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Data_premiery)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nosnik)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nosnik)
+        </dd>
+    </dl>
+</div>
+

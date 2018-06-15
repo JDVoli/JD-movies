@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MoviesDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Film">
+          <Key>
+            <PropertyRef Name="ID_filmu" />
+          </Key>
+          <Property Name="ID_filmu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tytul" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Data_premiery" Type="date" Nullable="false" />
+          <Property Name="Ogr_wiekowe" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Czas_trwania" Type="int" Nullable="false" />
+          <Property Name="Nosnik" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Ilosc" Type="int" Nullable="false" />
+          <Property Name="Wycofany" Type="char" MaxLength="1" />
+          <Property Name="Zdjecie" Type="image" />
+        </EntityType>
+        <EntityType Name="Gatunek">
+          <Key>
+            <PropertyRef Name="ID_gatunku" />
+          </Key>
+          <Property Name="ID_gatunku" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazwa" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Gatunki_filmu">
+          <Key>
+            <PropertyRef Name="ID_filmu" />
+            <PropertyRef Name="ID_gatunku" />
+          </Key>
+          <Property Name="ID_filmu" Type="int" Nullable="false" />
+          <Property Name="ID_gatunku" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="Film_Gatunki_filmu_FK1">
+          <End Role="Film" Type="Self.Film" Multiplicity="1" />
+          <End Role="Gatunki_filmu" Type="Self.Gatunki_filmu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Film">
+              <PropertyRef Name="ID_filmu" />
+            </Principal>
+            <Dependent Role="Gatunki_filmu">
+              <PropertyRef Name="ID_filmu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Gatunek_Gatunki_filmu_FK1">
+          <End Role="Gatunek" Type="Self.Gatunek" Multiplicity="1" />
+          <End Role="Gatunki_filmu" Type="Self.Gatunki_filmu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gatunek">
+              <PropertyRef Name="ID_gatunku" />
+            </Principal>
+            <Dependent Role="Gatunki_filmu">
+              <PropertyRef Name="ID_gatunku" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MoviesDBStoreContainer">
+          <EntitySet Name="Film" EntityType="Self.Film" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gatunek" EntityType="Self.Gatunek" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gatunki_filmu" EntityType="Self.Gatunki_filmu" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Film_Gatunki_filmu_FK1" Association="Self.Film_Gatunki_filmu_FK1">
+            <End Role="Film" EntitySet="Film" />
+            <End Role="Gatunki_filmu" EntitySet="Gatunki_filmu" />
+          </AssociationSet>
+          <AssociationSet Name="Gatunek_Gatunki_filmu_FK1" Association="Self.Gatunek_Gatunki_filmu_FK1">
+            <End Role="Gatunek" EntitySet="Gatunek" />
+            <End Role="Gatunki_filmu" EntitySet="Gatunki_filmu" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MoviesDB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Film">
+          <Key>
+            <PropertyRef Name="ID_filmu" />
+          </Key>
+          <Property Name="ID_filmu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tytul" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Data_premiery" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Ogr_wiekowe" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Czas_trwania" Type="Int32" Nullable="false" />
+          <Property Name="Nosnik" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ilosc" Type="Int32" Nullable="false" />
+          <Property Name="Wycofany" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Gatuneks" Relationship="Self.Gatunki_filmu" FromRole="Film" ToRole="Gatunek" />
+          <Property Name="Zdjecie" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Gatunek">
+          <Key>
+            <PropertyRef Name="ID_gatunku" />
+          </Key>
+          <Property Name="ID_gatunku" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazwa" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Films" Relationship="Self.Gatunki_filmu" FromRole="Gatunek" ToRole="Film" />
+        </EntityType>
+        <Association Name="Gatunki_filmu">
+          <End Role="Film" Type="Self.Film" Multiplicity="*" />
+          <End Role="Gatunek" Type="Self.Gatunek" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="MoviesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Films" EntityType="Self.Film" />
+          <EntitySet Name="Gatuneks" EntityType="Self.Gatunek" />
+          <AssociationSet Name="Gatunki_filmu" Association="Self.Gatunki_filmu">
+            <End Role="Film" EntitySet="Films" />
+            <End Role="Gatunek" EntitySet="Gatuneks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MoviesDBStoreContainer" CdmEntityContainer="MoviesEntities">
+          <EntitySetMapping Name="Films">
+            <EntityTypeMapping TypeName="MoviesDB.Film">
+              <MappingFragment StoreEntitySet="Film">
+                <ScalarProperty Name="Zdjecie" ColumnName="Zdjecie" />
+                <ScalarProperty Name="ID_filmu" ColumnName="ID_filmu" />
+                <ScalarProperty Name="Tytul" ColumnName="Tytul" />
+                <ScalarProperty Name="Data_premiery" ColumnName="Data_premiery" />
+                <ScalarProperty Name="Ogr_wiekowe" ColumnName="Ogr_wiekowe" />
+                <ScalarProperty Name="Czas_trwania" ColumnName="Czas_trwania" />
+                <ScalarProperty Name="Nosnik" ColumnName="Nosnik" />
+                <ScalarProperty Name="Ilosc" ColumnName="Ilosc" />
+                <ScalarProperty Name="Wycofany" ColumnName="Wycofany" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gatuneks">
+            <EntityTypeMapping TypeName="MoviesDB.Gatunek">
+              <MappingFragment StoreEntitySet="Gatunek">
+                <ScalarProperty Name="ID_gatunku" ColumnName="ID_gatunku" />
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Gatunki_filmu" TypeName="MoviesDB.Gatunki_filmu" StoreEntitySet="Gatunki_filmu">
+            <EndProperty Name="Film">
+              <ScalarProperty Name="ID_filmu" ColumnName="ID_filmu" />
+            </EndProperty>
+            <EndProperty Name="Gatunek">
+              <ScalarProperty Name="ID_gatunku" ColumnName="ID_gatunku" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

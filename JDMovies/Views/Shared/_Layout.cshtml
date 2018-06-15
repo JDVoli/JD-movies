@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,
+    initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <link href="~/Content/css/materialize.min.css" rel="stylesheet"
+          type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet"
+          type="text/css" />
+    <script type="text/javascript"
+            src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="~/Content/js/materialize.min.js"></script>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper teal">
+            <div class="container">
+                <a class="brand-logo"> @Html.ActionLink("JD Movies", "Index")</a>
+               
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    @Html.ActionLink("Dodaj film", "Create")
+                    <!--<li><a asp-controller="Movies" asp-action="Create" >Dodaj film</a></li>             -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="container">
+            @RenderBody()                
+        </div>
+
+    </div>
+    
+
+    <footer class="page-footer teal">
+        @*<div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">My ASP.NET Application</h5>
+                    <p class="grey-text text-lighten-4">
+                        You can use rows and columns here to organize your footer content.
+                    </p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Sitemap</h5>
+                    <ul>
+                        <li>
+                            <a class="grey-text text-lighten-3"
+                               href="#!">Link 1</a>
+                        </li>
+                        <li>
+                            <a class="grey-text text-lighten-3"
+                               href="#!">Link 2</a>
+                        </li>
+                        <li>
+                            <a class="grey-text text-lighten-3"
+                               href="#!">Link 3</a>
+                        </li>
+                        <li>
+                            <a class="grey-text text-lighten-3"
+                               href="#!">Link 4</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>*@
+
+        <div class="footer-copyright">
+            <div class="container">
+                &copy;2018 - Daniel Jabłoński s15843
+                <a class="grey-text text-lighten-4 right"
+                   href="#!">O stronie</a>
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+</body>
+
+</html>
