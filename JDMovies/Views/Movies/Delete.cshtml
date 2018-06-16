@@ -1,34 +1,72 @@
-﻿@model JDMovies.DAL.Film
+﻿@model JDMovies.Models.MoviesViewModel
 
 @{ 
 
     ViewBag.Title = "Usuń film";
 }
 
-<h2>Usuń film</h2>
+<h2>Usuń film</h2><hr />
 
 <h5>Czy jesteś pewien, że chcesz usunąć ten film?</h5>
 
-<div>
-    <dl>
-        <dt>
-            @Html.DisplayNameFor(model => model.Tytul)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Tytul)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Data_premiery)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Data_premiery)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Nosnik)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nosnik)
-        </dd>
-    </dl>
-</div>
+
+    <table class="table" style="margin-top: 50px">
+
+        <tr>
+            <td class="pull-l10">
+                @Html.DisplayName("Tytuł")
+            </td>
+            <td style="font-weight: bold">
+                @Html.DisplayFor(model => model.Film.Tytul)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayName("Data premiery")
+            </td>
+            <td style="font-weight: bold">
+                @Html.DisplayFor(model => model.Film.Data_premiery)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayName("Nośnik")
+            </td>
+            <td style="font-weight: bold">
+                @Html.DisplayFor(model => model.Film.Nosnik)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayName("Okładka")
+            </td>
+            <td>
+                @{
+                    var base64 = Convert.ToBase64String(Model.Film.Zdjecie);
+                    var imgsrc = string.Format("data:image/jpeg;base64,{0}", base64);
+                }
+                <img src='@imgsrc' />
+            </td>
+        </tr>
+    </table>
+
+    <div class="responsive-table">
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="ID" />
+
+            <button class="col btn waves-effect waves-light" type="submit" value="Delete" style="margin-top: 20px">
+                Usuń
+                <i class="material-icons left">cancel</i>
+            </button>
+
+
+                <button class="col offset-l9 push-l1 waves-effect waves-light btn-flat" style="margin-top: 20px">
+                    @Html.ActionLink("Powrót", "Index")
+                    <i class="material-icons left">replay</i>
+                </button>
+
+
+        </form>
+    </div>
+
 

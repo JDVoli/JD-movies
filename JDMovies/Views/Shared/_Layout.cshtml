@@ -20,62 +20,31 @@
     <nav>
         <div class="nav-wrapper teal">
             <div class="container">
-                <a class="brand-logo"> @Html.ActionLink("JD Movies", "Index")</a>
-               
+                <a class="brand-logo" href="/Movies/Index"> JD Movies</a>               
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    @Html.ActionLink("Dodaj film", "Create")
-                    <!--<li><a asp-controller="Movies" asp-action="Create" >Dodaj film</a></li>             -->
+                    <a href="/Movies/Create">Dodaj film</a>                    
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="row">
-        <div class="container">
-            @RenderBody()                
-        </div>
+    <div class="table-responsive">
+        <div class="row">
+            <div class="container">
+                @RenderBody()
+            </div>
 
+        </div>
     </div>
     
 
-    <footer class="page-footer teal">
-        @*<div class="container">
-            <div class="row">
-                <div class="col l6 s12">
-                    <h5 class="white-text">My ASP.NET Application</h5>
-                    <p class="grey-text text-lighten-4">
-                        You can use rows and columns here to organize your footer content.
-                    </p>
-                </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="white-text">Sitemap</h5>
-                    <ul>
-                        <li>
-                            <a class="grey-text text-lighten-3"
-                               href="#!">Link 1</a>
-                        </li>
-                        <li>
-                            <a class="grey-text text-lighten-3"
-                               href="#!">Link 2</a>
-                        </li>
-                        <li>
-                            <a class="grey-text text-lighten-3"
-                               href="#!">Link 3</a>
-                        </li>
-                        <li>
-                            <a class="grey-text text-lighten-3"
-                               href="#!">Link 4</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>*@
+    <footer class="page-footer teal">     
 
         <div class="footer-copyright">
             <div class="container">
                 &copy;2018 - Daniel Jabłoński s15843
                 <a class="grey-text text-lighten-4 right"
-                   href="#!">O stronie</a>
+                   href="/JDs/Index">O stronie</a>
             </div>
 
         </div>
