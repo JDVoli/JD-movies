@@ -23,9 +23,9 @@ namespace JDMovies.DAL
         }
 
 
-        public Gatunek GetGenreByID(int genreID)
+        public Gatunek GetGenreByName(string gat)
         {
-            return _db.Gatuneks.Find(genreID);
+            return _db.Gatuneks.Single(n => n.Nazwa == gat);
         }
 
 

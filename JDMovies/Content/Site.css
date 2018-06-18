@@ -1,3 +1,8 @@
 ﻿a {
     color: #009688;
 }
+
+#covers img{    
+    height: 285px;
+    width: 200px;
+}

@@ -9,7 +9,7 @@ namespace JDMovies.DAL
     interface IGenreRepository : IDisposable
     {
         IEnumerable<Gatunek> GetGenres();
-        Gatunek GetGenreByID(int genreID);
+        Gatunek GetGenreByName(string gat);
 
     }
 }

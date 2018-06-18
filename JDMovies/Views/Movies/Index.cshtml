@@ -1,4 +1,4 @@
-﻿@model JDMovies.Models.MoviesViewModel
+﻿@model JDMovies.Models.MoviesIndexViewModel
 
 @{
     ViewBag.Title = "Pełna oferta";
@@ -106,7 +106,9 @@
                                     var base64 = Convert.ToBase64String(item.Zdjecie);
                                     var imgsrc = string.Format("data:image/jpeg;base64,{0}", base64);
                                 }
-                                <img src='@imgsrc' />
+                                <div class="covers">
+                                    <img src='@imgsrc' />
+                                </div>
                             </td>
                         }
                     }

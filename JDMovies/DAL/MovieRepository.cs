@@ -37,11 +37,17 @@ namespace JDMovies.DAL
         public void DeleteMovie(int movieID)
         {
             Film mov = _db.Films.Find(movieID);
+
+            mov.Gatuneks.Clear();
+            
             _db.Films.Remove(mov);
         }
 
         public void UpdateMovie(Film movie)
         {
+
+            
+
             //_db.Entry(movie).State = System.Data.Entity.EntityState;
         }
         

@@ -1,4 +1,4 @@
-﻿@model JDMovies.Models.MoviesViewModel
+﻿@model JDMovies.Models.MoviesCreateViewModel
 
 @{
     ViewBag.Title = "Dodaj nowy film";
@@ -6,75 +6,116 @@
 
 <h2>Dodaj nowy film</h2><hr />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div class="input-field col s7">
-        @Html.Label("Tytuł")
+    <div class="row">
+        <div class="col l5">
+            <div class="input-field col s7">
+                @Html.Label("Tytuł")
 
-        @Html.TextBoxFor(model => model.Film.Tytul)
-    </div>
-    <div class="col s7">
-        <label>
-            Data premiery
-            <input type="date" />
-        </label>
-    </div>
-    <div class="input-field col s7">
-        @Html.Label("Nośnik")
+                @Html.TextBoxFor(model => model.Film.Tytul)
+            </div>
+            <div class="col s7">
+                <label>
+                    Data premiery                    
+                    <input type="date" name="Data_premiery" />
+                </label>
+            </div>
+            <div class="input-field col s7" style="margin-top:-10px">
+                @Html.Label("Nośnik")
 
-        @Html.TextBoxFor(model => model.Film.Nosnik)
-    </div>
-    <div class="input-field col s7">
-        @Html.Label("Czas trwania")
+                <div style="margin-top: 50px">
 
-        @Html.TextBoxFor(model => model.Film.Czas_trwania)
-    </div>
-    <div class="input-field col s7">
-        @Html.Label("Ograniczenie wiekowe")
+                    @Html.DropDownList("Nosnik",new SelectList(Model.GetNosniks.Items, "Value", "Text"),new { @class = "browser-default" })
 
-        @Html.TextBoxFor(model => model.Film.Ogr_wiekowe)
-    </div>
-    <div class="input-field col s8" >
-        @Html.Label("Okładka")
-        <input type="file" style="margin-bottom: 20px; margin-top: 50px" />
-    </div>
+                    @*<select name="Nosnik" class="browser-default">
+                        @foreach (var n in Model.GetNosniks)
+                        {
+                            <option value="@n">@n</option>
+                        }
+                    </select>*@
+                </div>
 
-    
-   
-    
+            </div>
+            <div class="input-field col s7">
+                @Html.Label("Czas trwania")
+
+                @Html.TextBoxFor(model => model.Film.Czas_trwania)
+            </div>
+
+            <div class="input-field col s7" style="margin-top:-10px">
+                @Html.Label("Ograniczenie wiekowe")
+
+                <div style="margin-top: 50px">
+
+                    @Html.DropDownList("Ogr_wiekowe", new SelectList(Model.GetAgeLim.Items, "Value", "Text"), new { @class = "browser-default" })
+
+                    @*<select name="Ogr_wiekowe" class="browser-default">
+
+            @foreach (var a in Model.GetAgeLim)
+            {
+                <option value="@a">@a</option>
+            }
+        </select>*@
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="input-field col s8">
+                @Html.Label("Okładka")
+                <input type="file" style="margin-bottom: 20px; margin-top: 50px" name="Zdjecie"/>
+            </div>
+
+
+
+        </div>
         <div class="row">
-            <div class="input-field col s10" style="margin-bottom: 60px">
+            <div class="input-field col s10" name="Gatunek" style="margin-bottom: 60px">
                 @Html.Label("Gatunek")
             </div>
             <div class="col l5">
                 @foreach (var g in Model.Genres)
                 {
                     <div class="col l4">
-
                         <label>
-                            <input type="checkbox" class="filled-in" name="gatunek" value=@g.Nazwa />
+                            <input type="checkbox" class="filled-in" name="Gatunek" value="@g.Nazwa" />
                             <span>@g.Nazwa</span>
                         </label>
 
                     </div>
                 }
             </div>
-       </div>
+        </div>
 
 
 
-    <div class="col l12">
-        <button class="col btn waves-effect waves-light " type="submit" style="margin-top:40px"><i class="material-icons left">send</i>Dodaj</button>
 
-        <button class="col offset-l9 waves-light btn-flat" style="margin-top: 40px">
-            @Html.ActionLink("Powrót", "Index")
-            <i class="material-icons left">replay</i>
-        </button>
 
+
+        <div class="col l12">
+            <button class="col btn waves-effect waves-light " type="submit" style="margin-top:40px" value="Create"><i class="material-icons left">send</i>Dodaj</button>
+
+            <a href="/Movies/Index" class="col offset-l9 waves-light btn-flat" style="margin-top: 40px">
+                Powrót
+                <i class="material-icons left">replay</i>
+            </a>
+
+        </div>
     </div>
-
 }
 
+
+@*<script>
+
+        function submitFun() {
+            var a = document.getElementById("age").value;
+            var n = document.getElementById("nosnik").value;
+
+            alert(a + n);
+
+    }
+
+</script>*@
 
 
 

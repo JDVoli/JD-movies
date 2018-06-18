@@ -7,7 +7,7 @@ using JDMovies.DAL;
 
 namespace JDMovies.Models
 {
-    public class MoviesViewModel
+    public class MoviesIndexViewModel
     {
         public IEnumerable<Film> Movies { get; set; }
         public IEnumerable<Gatunek> Genres { get; set; }
@@ -18,11 +18,16 @@ namespace JDMovies.Models
 
         public IEnumerable<string> GetAgeLim { get; set; }
 
-        //public IEnumerable<string> GetNosniks
+
+        //public IEnumerable<SelectListItem> GetNosniks2
         //{
         //    get
         //    {
-        //        return Movies.Select(n => n.Nosnik).Distinct().ToList();
+        //        return Movies?.Select(t => new SelectListItem
+        //        {
+        //            Value = (++it).ToString(),
+        //            Text = t.Nosnik
+        //        }) ?? new List<SelectListItem>();
         //    }
         //}
 

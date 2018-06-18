@@ -1,4 +1,4 @@
-﻿@model JDMovies.Models.MoviesViewModel
+﻿@model JDMovies.Models.MoviesDeleteViewModel
 
 @{ 
 
@@ -42,16 +42,20 @@
             </td>
             <td>
                 @{
-                    var base64 = Convert.ToBase64String(Model.Film.Zdjecie);
-                    var imgsrc = string.Format("data:image/jpeg;base64,{0}", base64);
+                    if (Model.Film.Zdjecie != null)
+                    {
+                        var base64 = Convert.ToBase64String(Model.Film.Zdjecie);
+                        var imgsrc = string.Format("data:image/jpeg;base64,{0}", base64);
+                        <img src='@imgsrc' />
+                    }
                 }
-                <img src='@imgsrc' />
+
             </td>
         </tr>
     </table>
 
     <div class="responsive-table">
-        <form asp-action="Delete">
+        <form asp-action="Delete" method="POST">
             <input type="hidden" asp-for="ID" />
 
             <button class="col btn waves-effect waves-light" type="submit" value="Delete" style="margin-top: 20px">
@@ -60,10 +64,10 @@
             </button>
 
 
-                <button class="col offset-l9 push-l1 waves-effect waves-light btn-flat" style="margin-top: 20px">
-                    @Html.ActionLink("Powrót", "Index")
+                <a href="/Movies/Index" class="col offset-l9 push-l1 waves-effect waves-light btn-flat" style="margin-top: 20px">
+                    Powrót
                     <i class="material-icons left">replay</i>
-                </button>
+                </a>
 
 
         </form>

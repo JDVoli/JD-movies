@@ -1,4 +1,4 @@
-﻿@model JDMovies.Models.MoviesViewModel
+﻿@model JDMovies.Models.MoviesEditViewModel
 
 @{
     ViewBag.Title = "Edytuj film";
@@ -7,44 +7,61 @@
 <h2>Edytuj film:  @Model.Film.Tytul</h2><hr />
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div class="input-field col s7" style="margin-top:40px">
-        @Html.Label("Tytuł")
+    <div class="row">
+        <div class="col l5">
+            <div class="input-field col s7" style="margin-top:40px">
+                @Html.Label("Tytuł")
 
-        @Html.TextBoxFor(model => model.Film.Tytul)
-    </div>
-    <div class="col s7">
-        <label>
-            Data premiery
-            <input type="datetime" value=@Model.Film.Data_premiery />
-        </label>
-    </div>
-    <div class="input-field col s7">
-        @Html.Label("Nośnik")
+                @Html.TextBoxFor(model => model.Film.Tytul)
+            </div>
+            <div class="col s7">
+                @Html.Label("Data premiery")                
+                
+                    <input type="date" value="@Model.Film.Data_premiery.ToString("yyyy-MM-dd")" />
+                
+            </div>
+            <div class="input-field col s7"  style="margin-top:-10px">
+                @Html.Label("Nośnik")
 
-        @Html.TextBoxFor(model => model.Film.Nosnik)
-    </div>
-    <div class="input-field col s7">
-        @Html.Label("Czas trwania")
+                <div style="margin-top: 50px">
 
-        @Html.TextBoxFor(model => model.Film.Czas_trwania)
-    </div>
-    <div class="input-field col s7">
-        @Html.Label("Ograniczenie wiekowe")
+                    @Html.DropDownList("Nosnik", new SelectList(Model.GetNosniks.Items, "Value", "Text", Model.Film.Nosnik), new { @class = "browser-default" })
+                    
+                </div>
+            </div>
+            <div class="input-field col s7">
+                @Html.Label("Czas trwania")
 
-        @Html.TextBoxFor(model => model.Film.Ogr_wiekowe)
-    </div>
-    <div class="input-field col s10">
-        @Html.Label("Okładka")
-        @{
-            var base64 = Convert.ToBase64String(Model.Film.Zdjecie);
-            var imgsrc = string.Format("data:image/jpeg;base64,{0}", base64);
-        }
-        <img src='@imgsrc' style="margin-top:40px" />
-        <input type="file" style="margin-bottom: 20px; margin-top: 50px" />
-    </div>
+                @Html.TextBoxFor(model => model.Film.Czas_trwania)
+            </div>
+            <div class="input-field col s7" style="margin-top:-10px" >                
+                    @Html.Label("Ograniczenie wiekowe")
+                <div style="margin-top: 50px">
 
+                    @Html.DropDownList("Ogr_wiekowe", new SelectList(Model.GetAgeLim.Items, "Value", "Text", Model.Film.Ogr_wiekowe), new { @class = "browser-default" })
+
+                </div>
+                </div>
+
+            </div>
+        
+        <div class="col">
+            <div class="input-field col m10">
+                @Html.Label("Okładka")
+                @{
+                    var base64 = Convert.ToBase64String(Model.Film.Zdjecie);
+                    var imgsrc = string.Format("data:image/jpeg;base64,{0}", base64);
+                }
+                <div class="row">
+                    <div class="covers">
+                        <img src='@imgsrc' style="margin-top:40px" />
+                    </div>
+                    <input type="file" style="margin-bottom: 20px; margin-top: 50px" name="Zdjecie"/>
+                </div>
+            </div>
+        </div>
     <div class="row">
         <div class="input-field col s10" style="margin-bottom: 60px">
             @Html.Label("Gatunek")
@@ -68,24 +85,24 @@
 
                 </div>
             }
-            </div>
-
         </div>
 
+    </div>
 
 
 
 
 
-        <div class="col l12">
-            <button class="col btn waves-effect waves-light " type="submit" style="margin-top:40px"><i class="material-icons left">create</i>Edytuj</button>
 
-            <button class="col offset-l9 waves-light btn-flat" style="margin-top: 40px">
-                @Html.ActionLink("Powrót", "Index")
-                <i class="material-icons left">replay</i>
-            </button>
+    <div class="col l12">
+        <button class="col btn waves-effect waves-light " type="submit" style="margin-top:40px" value="Edit"><i class="material-icons left">create</i>Edytuj</button>
 
-        </div>
+       <a href="/Movies/Index" class="col offset-l9 waves-light btn-flat" style="margin-top: 40px">
+            Powrót
+            <i class="material-icons left">replay</i>
+        </a>
 
-        }
+    </div>
+ </div>
+}
 

@@ -15,8 +15,6 @@
           <Property Name="Ogr_wiekowe" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="Czas_trwania" Type="int" Nullable="false" />
           <Property Name="Nosnik" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Ilosc" Type="int" Nullable="false" />
-          <Property Name="Wycofany" Type="char" MaxLength="1" />
           <Property Name="Zdjecie" Type="image" />
         </EntityType>
         <EntityType Name="Gatunek">
@@ -85,8 +83,6 @@
           <Property Name="Ogr_wiekowe" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Czas_trwania" Type="Int32" Nullable="false" />
           <Property Name="Nosnik" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Ilosc" Type="Int32" Nullable="false" />
-          <Property Name="Wycofany" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Gatuneks" Relationship="Self.Gatunki_filmu" FromRole="Film" ToRole="Gatunek" />
           <Property Name="Zdjecie" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
@@ -126,9 +122,7 @@
                 <ScalarProperty Name="Ogr_wiekowe" ColumnName="Ogr_wiekowe" />
                 <ScalarProperty Name="Czas_trwania" ColumnName="Czas_trwania" />
                 <ScalarProperty Name="Nosnik" ColumnName="Nosnik" />
-                <ScalarProperty Name="Ilosc" ColumnName="Ilosc" />
-                <ScalarProperty Name="Wycofany" ColumnName="Wycofany" />
-              </MappingFragment>
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Gatuneks">

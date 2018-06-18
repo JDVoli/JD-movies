@@ -199,7 +199,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MoviesDB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\MoviesViewModel.cs" />
+    <Compile Include="Models\MoviesDeleteViewModel.cs" />
+    <Compile Include="Models\MoviesCreateViewModel.cs" />
+    <Compile Include="Models\MoviesEditViewModel.cs" />
+    <Compile Include="Models\MoviesIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +245,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
