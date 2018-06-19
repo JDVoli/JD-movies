@@ -107,6 +107,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\materialize.css" />
     <Content Include="Content\css\materialize.min.css" />
+    <Content Include="Content\Images\CustomCover.jpg" />
+    <Content Include="Content\Images\quality.mp3" />
     <Content Include="Content\js\materialize.js" />
     <Content Include="Content\js\materialize.min.js" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
@@ -203,6 +205,8 @@
     <Compile Include="Models\MoviesCreateViewModel.cs" />
     <Compile Include="Models\MoviesEditViewModel.cs" />
     <Compile Include="Models\MoviesIndexViewModel.cs" />
+    <Compile Include="Models\Validation\FilmMetadata.cs" />
+    <Compile Include="Models\Validation\PartialClasses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +240,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\JDs\Index.cshtml" />
+    <Content Include="Views\Movies\_listOfMovies.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -245,7 +250,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

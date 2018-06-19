@@ -13,7 +13,8 @@
             <div class="input-field col s7">
                 @Html.Label("Tytuł")
 
-                @Html.TextBoxFor(model => model.Film.Tytul)
+                <input type="text" name="Tytul" id="Tytuł" />
+                
             </div>
             <div class="col s7">
                 <label>
@@ -40,7 +41,8 @@
             <div class="input-field col s7">
                 @Html.Label("Czas trwania")
 
-                @Html.TextBoxFor(model => model.Film.Czas_trwania)
+                <input type="text" name="Czas_trwania" id="Czas trwania" />
+
             </div>
 
             <div class="input-field col s7" style="margin-top:-10px">
@@ -63,7 +65,7 @@
         <div class="col">
             <div class="input-field col s8">
                 @Html.Label("Okładka")
-                <input type="file" style="margin-bottom: 20px; margin-top: 50px" name="Zdjecie"/>
+                <input type="file" style="margin-bottom: 20px; margin-top: 50px" name="cover"/>
             </div>
 
 
@@ -105,17 +107,9 @@
 }
 
 
-@*<script>
+<script>
 
-        function submitFun() {
-            var a = document.getElementById("age").value;
-            var n = document.getElementById("nosnik").value;
-
-            alert(a + n);
-
-    }
-
-</script>*@
+</script>
 
 
 

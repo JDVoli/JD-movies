@@ -4,6 +4,23 @@
     ViewBag.Title = "Pełna oferta";
 }
 
+<div class="loaders" id="loader">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-green-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 <div class="responsive-table">
     <div class="col pull-l2" style="margin-top:60px">
@@ -15,7 +32,7 @@
             {
                 <p>
                     <label>
-                        <input type="checkbox" name="nosnik" value=@n />
+                        <input type="checkbox" name="nosnik" value="@n" />
                         <span>@n</span>
                     </label>
                 </p>
@@ -27,13 +44,13 @@
             {
                 <p>
                     <label>
-                        <input type="checkbox" name="ogr_wiek" value=@a />
+                        <input type="checkbox" name="ogr_wiek" value="@a" />
                         <span>@a</span>
                     </label>
                 </p>
 
             }
-            
+
             <br />
             Gatunek <br />
 
@@ -41,7 +58,7 @@
             {
                 <p>
                     <label>
-                        <input type="checkbox" name="gatunek" value=@g.Nazwa />
+                        <input type="checkbox" name="gatunek" value="@g.Nazwa" />
                         <span>@g.Nazwa</span>
                     </label>
                 </p>
@@ -55,49 +72,63 @@
     </div>
 </div>
 
-    <div class="col l10">
-        <h2>FILMY</h2><hr />
+<div class="col l10">
+    <h2>FILMY</h2><hr />
 
-        <div class="input-field col l7">
-            <form asp-action="Index">
-                <input class="col l10" type="text" name="search" placeholder="Jaki tytuł Cię interesuje?" />
-                <button class="waves-effect waves-light btn-floating" type="submit"><i class="material-icons left">search</i></button>
-            </form>
-        </div>
-
-
-        <div class="input-field col l4 push-l1">
-            <select class="browser-default">
-                <option value="" disabled selected>Sortuj według</option>
-                <option value="A-Z">Tytuł od A do Z</option>
-                <option value="Z-A">Tytuł od Z do A</option>
-                <option value="Prem_1st">Data premiery od najnowszego</option>
-                <option value="Prems_last">Data premiery od najstarszego</option>
-            </select>
-        </div>
+    <div class="input-field col l7">
+        <form method="GET">
+            <input class="col l10" type="text" name="search" placeholder="Jaki tytuł Cię interesuje?"  id="szukajInput"/>
+            <button class="waves-effect waves-light btn-floating" type="submit" id="szukaj"><i class="material-icons left">search</i></button>
+        </form>
+    </div>
 
 
+    <div class="input-field col l4 push-l1">
+        <select class="browser-default" id="sort">
+            <option value="" disabled selected>Sortuj według</option>
+            <option value="A-Z">Tytuł od A do Z</option>
+            <option value="Z-A">Tytuł od Z do A</option>
+            <option value="Prem_1st">Data premiery od najnowszego</option>
+            <option value="Prems_last">Data premiery od najstarszego</option>
+        </select>
+    </div>
 
 
-        @*@using (Html.BeginForm())
-            {
-                <div class="row">
-                    <div class="col-md-3">
-                        @Html.TextBoxFor(model => model.Tytul);
-                    </div>
+
+
+
+
+    @*@using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.Tytul);
                 </div>
-            }*@
+            </div>
+        }*@
 
-        @*<p>
-                @Html.ActionLink("Create New", "Create")
-            </p>*@
+    @*<p>
+            @Html.ActionLink("Create New", "Create")
+        </p>*@
 
-
+    <div id="tbl">
         <table class="embed-responsive">
+
+            @if (Model.Movies.Count() == 0)
+            {
+                <tr>
+                    <td>
+                        <h4>Nie znaleziono wyników</h4>
+                    </td>
+                </tr>
+
+            }
+
 
             @foreach (var item in Model.Movies)
             {
                 <tr>
+
                     @{
                         if (item.Zdjecie != null)
                         {
@@ -165,7 +196,66 @@
                 </tr>
             }
 
+
+
         </table>
     </div>
+</div>
+
+<script>
+
+
+    $("#loader").hide();
+
+
+    $("select")
+        .change(function () {
+            var str = "";
+            $("select option:selected").each(function () {
+                str += $(this).text() + " ";
+                var com = str.localeCompare("Sortuj według ");
+
+                if (com == 0) {
+                    $("#loader").hide();
+                } else {
+                    $("#loader").show();
+                }                 
+                
+            });
+            $.ajax({               
+                url: '/Movies/ListOfMovies',
+                type: 'POST',
+                data: { str },
+                success: function (data) {                    
+                    $("#tbl").html(data);
+                    $("#loader").hide();
+                }
+
+            })
+            //alert(str);
+        })
+        .trigger("change");
+
+
+    //$("#szukaj").submit(function () {
+    //    $.ajax({
+    //        url: '/Movies/Index',
+    //        type: 'GET',
+    //        data: {},
+    //        success: function (data) {
+    //            $("#tbl").html(data);
+    //        }
+    //    })
+    //});
+
+
+
+    $("button").click(function () {
+        $("#loader").show();
+
+    });
+
+
+</script>
 
 

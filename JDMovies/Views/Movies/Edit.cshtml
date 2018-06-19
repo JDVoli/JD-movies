@@ -14,12 +14,12 @@
             <div class="input-field col s7" style="margin-top:40px">
                 @Html.Label("Tytuł")
 
-                @Html.TextBoxFor(model => model.Film.Tytul)
+                <input type="text" name="Tytul" id="Tytuł" value="@Model.Film.Tytul" />
             </div>
             <div class="col s7">
                 @Html.Label("Data premiery")                
                 
-                    <input type="date" value="@Model.Film.Data_premiery.ToString("yyyy-MM-dd")" />
+                    <input type="date" value="@Model.Film.Data_premiery.ToString("yyyy-MM-dd")" name="Data_premiery" />
                 
             </div>
             <div class="input-field col s7"  style="margin-top:-10px">
@@ -34,7 +34,8 @@
             <div class="input-field col s7">
                 @Html.Label("Czas trwania")
 
-                @Html.TextBoxFor(model => model.Film.Czas_trwania)
+                <input type="text" name="Czas_trwania" id="Czas trwania" value="@Model.Film.Czas_trwania" />
+
             </div>
             <div class="input-field col s7" style="margin-top:-10px" >                
                     @Html.Label("Ograniczenie wiekowe")
@@ -52,13 +53,13 @@
                 @Html.Label("Okładka")
                 @{
                     var base64 = Convert.ToBase64String(Model.Film.Zdjecie);
-                    var imgsrc = string.Format("data:image/jpeg;base64,{0}", base64);
+                    var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
                 }
                 <div class="row">
                     <div class="covers">
-                        <img src='@imgsrc' style="margin-top:40px" />
+                        <img src='@imgsrc' style="margin-top:40px" name="Zdjecie" />
                     </div>
-                    <input type="file" style="margin-bottom: 20px; margin-top: 50px" name="Zdjecie"/>
+                    <input type="file" style="margin-bottom: 20px; margin-top: 50px" name="cover"/>
                 </div>
             </div>
         </div>
@@ -73,11 +74,11 @@
                     <label>
                         @if (Model.Film.Gatuneks.Contains(g))
                         {
-                            <input type="checkbox" class="filled-in" name="gatunek" value=@g.Nazwa checked="checked" />
+                            <input type="checkbox" class="filled-in" name="gatunek" value="@g.Nazwa" checked="checked" />
                         }
                         else
                         {
-                            <input type="checkbox" class="filled-in" name="gatunek" value=@g.Nazwa />
+                            <input type="checkbox" class="filled-in" name="gatunek" value="@g.Nazwa" />
                         }
 
                         <span>@g.Nazwa</span>
@@ -95,7 +96,7 @@
 
 
     <div class="col l12">
-        <button class="col btn waves-effect waves-light " type="submit" style="margin-top:40px" value="Edit"><i class="material-icons left">create</i>Edytuj</button>
+        <button class="col btn waves-effect waves-light " type="submit" style="margin-top:40px" value="Edit"><i class="material-icons left">create</i>Zapisz</button>
 
        <a href="/Movies/Index" class="col offset-l9 waves-light btn-flat" style="margin-top: 40px">
             Powrót

@@ -2,7 +2,13 @@
     color: #009688;
 }
 
-#covers img{    
+.covers img{    
     height: 285px;
     width: 200px;
+}
+
+.loaders{
+    position: fixed;
+    top: 50%;
+    left: 50%;
 }

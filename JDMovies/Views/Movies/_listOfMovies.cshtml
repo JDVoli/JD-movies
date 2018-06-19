@@ -1,0 +1,76 @@
+﻿@model IEnumerable<JDMovies.DAL.Film>
+
+
+<table class="embed-responsive">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @{
+                if (item.Zdjecie != null)
+                {
+                    <td>
+                        @{
+                            var base64 = Convert.ToBase64String(item.Zdjecie);
+                            var imgsrc = string.Format("data:image/jpeg;base64,{0}", base64);
+                        }
+                        <div class="covers">
+                            <img src='@imgsrc' />
+                        </div>
+                    </td>
+                }
+            }
+
+            <td>
+                <p style="font-size: 40px;font-weight:bold">
+                    @Html.DisplayFor(modelItem => item.Tytul)
+                </p>
+                <p>
+                    @Html.DisplayName("Data premiery: ")
+                    @Html.DisplayFor(modelItem => item.Data_premiery)<br />
+                </p>
+                <p>
+                    @Html.DisplayName("Nośnik: ")
+                    @Html.DisplayFor(modelItem => item.Nosnik)
+                </p>
+                <p>
+                    @Html.DisplayName("Czas trwania: ")
+                    @Html.DisplayFor(modelItem => item.Czas_trwania)
+                    @Html.DisplayName("min")
+                </p>
+
+                @{
+                    var st = "";
+                    if (item.Ogr_wiekowe.Equals("3+"))
+                    {
+                        st = "font-size:30px;color:green";
+                    }
+                    else if (item.Ogr_wiekowe.Equals("12+"))
+                    {
+                        st = "font-size:30px;color:yellow";
+                    }
+                    else if (item.Ogr_wiekowe.Equals("16+"))
+                    {
+                        st = "font-size:30px;color:orange";
+                    }
+                    else
+                    {
+                        st = "font-size:30px;color:red";
+                    }
+
+
+                }
+
+                <p style="@st">
+                    @Html.DisplayFor(modelItem => item.Ogr_wiekowe)
+                </p>
+
+                <p>
+                    @Html.ActionLink("Edytuj", "Edit", new { id = item.ID_filmu }) |
+                    @Html.ActionLink("Usuń", "Delete", new { id = item.ID_filmu })
+                </p>
+            </td>
+        </tr>
+    }
+
+</table>
