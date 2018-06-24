@@ -10,8 +10,7 @@ namespace JDMovies.DAL
         IEnumerable<Film> GetMovies();
         Film GetMovieByID(int movieID);
         void InsertMovie(Film movie);
-        void DeleteMovie(int movieID);
-        void UpdateMovie(Film movie);
+        void DeleteMovie(int movieID);        
         void Save();
 
     }

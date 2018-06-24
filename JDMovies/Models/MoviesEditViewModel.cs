@@ -10,7 +10,7 @@ namespace JDMovies.Models
     public class MoviesEditViewModel
     {
 
-        
+
         public IEnumerable<Gatunek> Genres { get; set; }
 
         public Film Film { get; set; }

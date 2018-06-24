@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -109,10 +110,8 @@ namespace JDMovies.Controllers
         }
 
 
-
-
-        [HttpGet]
-        public ActionResult Create(MoviesCreateViewModel vmc)
+       
+        public ActionResult Create()
         {
             var nos = unitOfWork.MovieRep.GetMovies().Select(n => n.Nosnik).Distinct().ToList();
 
@@ -127,32 +126,41 @@ namespace JDMovies.Controllers
             output.Sort((left, right) => left.CompareTo(right));
 
 
-            var ag = output.ConvertAll(delegate (int i) { return i + "+".ToString(); });            
+            var ag = output.ConvertAll(delegate (int i) { return i + "+".ToString(); });
 
 
             var selectListItemsNos = nos.Select(x => new SelectListItem() { Value = x.ToString(), Text = x }).ToList();
             var selectListItemsAg = ag.Select(x => new SelectListItem() { Value = x.ToString(), Text = x }).ToList();
 
-            vmc.Genres = unitOfWork.GenreRep.GetGenres();
-            vmc.GetNosniks = new SelectList(selectListItemsNos);
-            vmc.GetAgeLim = new SelectList(selectListItemsAg);
+
+            var vmc = new MoviesCreateViewModel
+            {
+                Genres = unitOfWork.GenreRep.GetGenres(),
+                GetNosniks = new SelectList(selectListItemsNos),
+                GetAgeLim = new SelectList(selectListItemsAg),
+                Film = new Film()
+            };            
 
             return View(vmc);
         }
 
+
+
         [HttpPost]
-        public ActionResult Create([Bind(Include = "Tytul,Nosnik,Data_premiery,Czas_trwania,Ogr_wiekowe,Zdjecie")] Film mov, string[] Gatunek)
+        public ActionResult Create(MoviesCreateViewModel mov, string[] Gatunek)
         {
             if (ModelState.IsValid)
-            {           
+            {
+
+           
                 HttpPostedFileBase img = Request.Files["cover"];
                 byte[] image = null;
 
-            
+
 
                 if (img != null)
-                {               
-                    if(img.ContentLength > 0)
+                {
+                    if (img.ContentLength > 0)
                     {
                         image = new byte[img.ContentLength];
                         img.InputStream.Read(image, 0, img.ContentLength);
@@ -164,26 +172,26 @@ namespace JDMovies.Controllers
                         BinaryReader brs = new BinaryReader(stream);
                         image = brs.ReadBytes((int)stream.Length);
                     }
-               
+
                 }
 
-            
-                    Film nMov = new Film();
-            
-                    nMov.Tytul = mov.Tytul;
-                    nMov.Nosnik = mov.Nosnik;
-                    nMov.Czas_trwania = mov.Czas_trwania;
 
-                    foreach(var i in Gatunek)
-                    {
-                        Gatunek g = unitOfWork.GenreRep.GetGenreByName(i);                    
+                Film nMov = new Film();
 
-                        nMov.Gatuneks.Add(g);
+                nMov.Tytul = mov.Film.Tytul;
+                nMov.Nosnik = mov.Film.Nosnik;
+                nMov.Czas_trwania = mov.Film.Czas_trwania;
+
+                foreach (var i in Gatunek)
+                {
+                    Gatunek g = unitOfWork.GenreRep.GetGenreByName(i);
+
+                    nMov.Gatuneks.Add(g);
                 }
 
-                    nMov.Data_premiery = mov.Data_premiery;
-                    nMov.Ogr_wiekowe = mov.Ogr_wiekowe;
-                    nMov.Zdjecie = image;
+                nMov.Data_premiery = mov.Film.Data_premiery;
+                nMov.Ogr_wiekowe = mov.Film.Ogr_wiekowe;
+                nMov.Zdjecie = image;
 
                 unitOfWork.MovieRep.InsertMovie(nMov);
                 unitOfWork.MovieRep.Save();
@@ -191,13 +199,10 @@ namespace JDMovies.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-
             return View(mov);
 
         }
 
-
-        [HttpGet]
         public ActionResult Edit(int id)
         {
 
@@ -220,37 +225,34 @@ namespace JDMovies.Controllers
 
 
             var vme = new MoviesEditViewModel
-            {               
-                
+            {
+
                 Genres = unitOfWork.GenreRep.GetGenres(),
                 GetNosniks = new SelectList(selectListItemsNos),
                 GetAgeLim = new SelectList(selectListItemsAg),
-                Film = new Film()
+                Film = unitOfWork.MovieRep.GetMovieByID(id)
             };
 
-            vme.Film = unitOfWork.MovieRep.GetMovieByID(id);
-
-        
 
             return View(vme);
         }
 
-
+        
         [HttpPost]
-        public ActionResult Edit([Bind(Include ="Tytul,Nosnik,Data_premiery,Czas_trwania,Ogr_wiekowe,Zdjecie")] Film movie, int id, string[] Gatunek)
+        public ActionResult Edit(MoviesEditViewModel movie, int id, string[] Gatunek)
         {
 
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) { 
+            
                 var toUpdate = unitOfWork.MovieRep.GetMovieByID(id);
 
 
 
-                toUpdate.Tytul = movie.Tytul;
-                toUpdate.Nosnik = movie.Nosnik;
-                toUpdate.Data_premiery = movie.Data_premiery;
-                toUpdate.Czas_trwania = movie.Czas_trwania;
-                toUpdate.Ogr_wiekowe = movie.Ogr_wiekowe;
+                toUpdate.Tytul = movie.Film.Tytul;
+                toUpdate.Nosnik = movie.Film.Nosnik;
+                toUpdate.Data_premiery = movie.Film.Data_premiery;
+                toUpdate.Czas_trwania = movie.Film.Czas_trwania;
+                toUpdate.Ogr_wiekowe = movie.Film.Ogr_wiekowe;
 
                 toUpdate.Gatuneks.Clear();
 
@@ -282,13 +284,13 @@ namespace JDMovies.Controllers
                 unitOfWork.MovieRep.Save();
 
                 return RedirectToAction(nameof(Index));
-
             }
 
-            return View(movie);           
+            return View(movie);
+        
         }
 
-        
+
         public ActionResult Delete(int id)
         {
 
@@ -306,16 +308,16 @@ namespace JDMovies.Controllers
         [HttpPost, ActionName("Delete")]        
         public ActionResult DeleteConfirmed(int id)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 unitOfWork.MovieRep.DeleteMovie(id);
                 unitOfWork.MovieRep.Save();
 
                 return RedirectToAction(nameof(Index));
 
-            }
+            //}
 
-            return View();
+            //return View();
         }
 
 

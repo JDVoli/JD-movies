@@ -12,3 +12,8 @@
     top: 50%;
     left: 50%;
 }
+
+span.field-validation-error {
+    color: red;
+}
+

@@ -11,43 +11,56 @@
 {
     <div class="row">
         <div class="col l5">
-            <div class="input-field col s7" style="margin-top:40px">
-                @Html.Label("Tytuł")
+            @*<div class="col s10" style="margin-bottom:10px">
+                    <span id="tyt" style="display:none;margin-top:5px" class="red-text"></span>
+                </div>*@
+            <div class="input-field col s7">
 
-                <input type="text" name="Tytul" id="Tytuł" value="@Model.Film.Tytul" />
+                @Html.LabelFor(m => m.Film.Tytul)
+                @Html.TextBoxFor(m => m.Film.Tytul)
+                @Html.ValidationMessageFor(m => m.Film.Tytul)
             </div>
             <div class="col s7">
-                @Html.Label("Data premiery")                
-                
-                    <input type="date" value="@Model.Film.Data_premiery.ToString("yyyy-MM-dd")" name="Data_premiery" />
-                
+                @{ Html.EnableClientValidation(false);}
+                @Html.LabelFor(m => m.Film.Data_premiery)
+                @Html.TextBoxFor(m => m.Film.Data_premiery, new { @Value = Model.Film.Data_premiery.ToString("dd.MM.yyyy"), @class = "datepicker", @id = "pickdate" })
+                @Html.ValidationMessageFor(m => m.Film.Data_premiery)
+
+                @{ Html.EnableClientValidation(true);}
+               
+                @*.ToString("yyyy-MM-dd")*@
+
+
             </div>
-            <div class="input-field col s7"  style="margin-top:-10px">
-                @Html.Label("Nośnik")
+            <div class="input-field col s7" style="margin-top:-10px">
+
+                @Html.LabelFor(m => m.Film.Nosnik)
 
                 <div style="margin-top: 50px">
 
-                    @Html.DropDownList("Nosnik", new SelectList(Model.GetNosniks.Items, "Value", "Text", Model.Film.Nosnik), new { @class = "browser-default" })
-                    
+                    @Html.DropDownListFor(m => m.Film.Nosnik, new SelectList(Model.GetNosniks.Items, "Value", "Text"), new { @class = "browser-default" })
+
+
                 </div>
             </div>
             <div class="input-field col s7">
-                @Html.Label("Czas trwania")
 
-                <input type="text" name="Czas_trwania" id="Czas trwania" value="@Model.Film.Czas_trwania" />
+                @Html.LabelFor(m => m.Film.Czas_trwania)
+                @Html.TextBoxFor(m => m.Film.Czas_trwania)
+                @Html.ValidationMessageFor(m => m.Film.Czas_trwania)
 
             </div>
-            <div class="input-field col s7" style="margin-top:-10px" >                
-                    @Html.Label("Ograniczenie wiekowe")
+            <div class="input-field col s7" style="margin-top:-10px">
+                @Html.LabelFor(m => m.Film.Ogr_wiekowe)
+
                 <div style="margin-top: 50px">
 
-                    @Html.DropDownList("Ogr_wiekowe", new SelectList(Model.GetAgeLim.Items, "Value", "Text", Model.Film.Ogr_wiekowe), new { @class = "browser-default" })
-
+                    @Html.DropDownListFor(m => m.Film.Ogr_wiekowe, new SelectList(Model.GetAgeLim.Items, "Value", "Text"), new { @class = "browser-default" })
                 </div>
-                </div>
-
             </div>
-        
+
+        </div>
+
         <div class="col">
             <div class="input-field col m10">
                 @Html.Label("Okładka")
@@ -59,51 +72,163 @@
                     <div class="covers">
                         <img src='@imgsrc' style="margin-top:40px" name="Zdjecie" />
                     </div>
-                    <input type="file" style="margin-bottom: 20px; margin-top: 50px" name="cover"/>
+                    <input type="file" style="margin-bottom: 20px; margin-top: 50px" name="cover" />
                 </div>
             </div>
         </div>
-    <div class="row">
-        <div class="input-field col s10" style="margin-bottom: 60px">
-            @Html.Label("Gatunek")
+        <div class="row">
+            <div class="input-field col s10" style="margin-bottom: 60px" name="Gatunek">
+                @Html.Label("Gatunek")
+            </div>
+            <div class="col s10" style="margin-bottom:10px">
+                <span id="gatun" style="display:none" class="red-text"></span>
+            </div>
+            <div class="col l5">
+                @foreach (var g in Model.Genres)
+                {
+                    <div class="col l4">
+                        <label>
+                            @if (Model.Film.Gatuneks.Contains(g))
+                            {
+                                <input type="checkbox" class="filled-in" name="Gatunek" value="@g.Nazwa" checked="checked" />
+                            }
+                            else
+                            {
+                                <input type="checkbox" class="filled-in" name="Gatunek" value="@g.Nazwa" />
+                            }
+
+                            <span>@g.Nazwa</span>
+                        </label>
+
+                    </div>
+                }
+            </div>
+
         </div>
-        <div class="col l5">
-            @foreach (var g in Model.Genres)
-            {
-                <div class="col l4">
-                    <label>
-                        @if (Model.Film.Gatuneks.Contains(g))
-                        {
-                            <input type="checkbox" class="filled-in" name="gatunek" value="@g.Nazwa" checked="checked" />
-                        }
-                        else
-                        {
-                            <input type="checkbox" class="filled-in" name="gatunek" value="@g.Nazwa" />
-                        }
 
-                        <span>@g.Nazwa</span>
-                    </label>
 
-                </div>
-            }
+        <div class="col l12">
+            <button class="col btn waves-effect waves-light " type="submit" style="margin-top:40px" value="Edit" onclick="return validateCheckbox()"><i class="material-icons left">create</i>Zapisz</button>
+
+            <a href="/Movies/Index" class="col offset-l9 waves-light btn-flat" style="margin-top: 40px">
+                Powrót
+                <i class="material-icons left">replay</i>
+            </a>
+
         </div>
-
     </div>
-
-
-
-
-
-
-    <div class="col l12">
-        <button class="col btn waves-effect waves-light " type="submit" style="margin-top:40px" value="Edit"><i class="material-icons left">create</i>Zapisz</button>
-
-       <a href="/Movies/Index" class="col offset-l9 waves-light btn-flat" style="margin-top: 40px">
-            Powrót
-            <i class="material-icons left">replay</i>
-        </a>
-
-    </div>
- </div>
 }
 
+<script>
+
+    // Spolszczenie datepickera
+
+    inter_pl = {
+       
+        cancel: 'Anuluj',
+        clear: 'Wyczyść',
+        done: 'Ok',
+        previousMonth: '‹',
+        nextMonth: '›',
+        months: [
+            'Styczeń',
+            'Luty',
+            'Marzec',
+            'Kwiecień',
+            'Maj',
+            'Czerwiec',
+            'Lipiec',
+            'Siepień',
+            'Wrzesień',
+            'Październik',
+            'Listopad',
+            'Grudzień'
+        ],
+        monthsShort: [
+            'Sty',
+            'Lut',
+            'Mar',
+            'Kwi',
+            'Maj',
+            'Cze',
+            'Lip',
+            'Sie',
+            'Wrz',
+            'Paź',
+            'Lis',
+            'Gru'
+        ],
+
+        weekdays: [
+            'Niedziela',
+            'Poniedziałek',
+            'Wtorek',
+            'Środa',
+            'Czwartek',
+            'Piątek',
+            'Sobota'
+        ],
+
+        weekdaysShort: [
+            'Niedz.',
+            'Pon.',
+            'Wt.',
+            'Śr.',
+            'Cz.',
+            'Pt.',
+            'Sob.'
+        ],
+        
+        weekdaysAbbrev: ['N', 'P', 'W', 'Ś', 'C', 'P', 'S'],
+
+       
+
+    };
+
+    var options = {
+        i18n: inter_pl,        
+        format: 'dd.mm.yyyy',
+        
+    };
+
+
+
+
+
+    var elem = document.querySelector('.datepicker');
+    var instance = M.Datepicker.init(elem, options);
+
+    
+
+   
+    var mydate = $("#pickdate").val();
+    mydate = mydate.split(".");
+
+    instance.setDate(new Date(mydate[2], parseInt(mydate[1], 10) - 1, mydate[0]));
+
+    //alert(instance.toString());
+    // ==========
+
+    function validateCheckbox() {
+        var n = $("input:checked").length;
+
+
+        if (n == 0) {
+
+            $("#gatun").css("display", "inline-block");
+            $("#gatun").html("Wymagany co najmniej 1 gatunek!");
+
+            if (n > 0) {
+                $("#gatun").css("display", "none");
+            }
+
+            return false;
+        } else {
+            $("#gatun").css("display", "none");
+            return true;
+        }
+
+    }
+
+
+</script>

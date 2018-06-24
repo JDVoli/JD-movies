@@ -24,7 +24,7 @@ namespace JDMovies.DAL
 
         public Film GetMovieByID(int movieID)
         {
-            return _db.Films.Find(movieID);
+            return _db.Films.Single(m => m.ID_filmu == movieID);
         }
 
         public void InsertMovie(Film movie)
@@ -43,13 +43,7 @@ namespace JDMovies.DAL
             _db.Films.Remove(mov);
         }
 
-        public void UpdateMovie(Film movie)
-        {
 
-            
-
-            //_db.Entry(movie).State = System.Data.Entity.EntityState;
-        }
         
         public void Save()
         {

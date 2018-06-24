@@ -6,59 +6,57 @@
 
 <h2>Dodaj nowy film</h2><hr />
 
-@using (Html.BeginForm("Create", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Movies", FormMethod.Post, new { enctype = "multipart/form-data", id="create-form"}))
 {
     <div class="row">
         <div class="col l5">
+            @*<div class="col s10" style="margin-bottom:10px">
+                <span id="tyt" style="display:none; margin-top:5px" class="red-text"></span>
+            </div>*@
             <div class="input-field col s7">
-                @Html.Label("Tytuł")
-
-                <input type="text" name="Tytul" id="Tytuł" />
-                
+               
+                @Html.LabelFor(m => m.Film.Tytul)
+                @Html.TextBoxFor(m => m.Film.Tytul)
+                @Html.ValidationMessageFor(m => m.Film.Tytul)
             </div>
+
             <div class="col s7">
-                <label>
-                    Data premiery                    
-                    <input type="date" name="Data_premiery" />
-                </label>
+                @{ Html.EnableClientValidation(false); }
+
+                @Html.LabelFor(m => m.Film.Data_premiery)
+                @Html.TextBoxFor(m => m.Film.Data_premiery, new { @class = @"datepicker", @Value=DateTime.Today.ToString("dd.MM.yyyy") })
+                @Html.ValidationMessageFor(m => m.Film.Data_premiery)
+
+                @{ Html.EnableClientValidation(true); }
+
+
             </div>
             <div class="input-field col s7" style="margin-top:-10px">
-                @Html.Label("Nośnik")
+
+                @Html.LabelFor(m => m.Film.Nosnik)
 
                 <div style="margin-top: 50px">
 
-                    @Html.DropDownList("Nosnik",new SelectList(Model.GetNosniks.Items, "Value", "Text"),new { @class = "browser-default" })
+                    @Html.DropDownListFor(m => m.Film.Nosnik, new SelectList(Model.GetNosniks.Items, "Value", "Text"), new { @class = "browser-default" })
 
-                    @*<select name="Nosnik" class="browser-default">
-                        @foreach (var n in Model.GetNosniks)
-                        {
-                            <option value="@n">@n</option>
-                        }
-                    </select>*@
-                </div>
+                        </div>
 
             </div>
             <div class="input-field col s7">
-                @Html.Label("Czas trwania")
 
-                <input type="text" name="Czas_trwania" id="Czas trwania" />
+                @Html.LabelFor(m => m.Film.Czas_trwania)
+                @Html.TextBoxFor(m => m.Film.Czas_trwania)
+                @Html.ValidationMessageFor(m => m.Film.Czas_trwania)
 
             </div>
 
             <div class="input-field col s7" style="margin-top:-10px">
-                @Html.Label("Ograniczenie wiekowe")
+
+                @Html.LabelFor(m => m.Film.Ogr_wiekowe)
 
                 <div style="margin-top: 50px">
-
-                    @Html.DropDownList("Ogr_wiekowe", new SelectList(Model.GetAgeLim.Items, "Value", "Text"), new { @class = "browser-default" })
-
-                    @*<select name="Ogr_wiekowe" class="browser-default">
-
-            @foreach (var a in Model.GetAgeLim)
-            {
-                <option value="@a">@a</option>
-            }
-        </select>*@
+                    
+                    @Html.DropDownListFor(m => m.Film.Ogr_wiekowe, new SelectList(Model.GetAgeLim.Items, "Value", "Text"), new { @class = "browser-default" })
                 </div>
             </div>
         </div>
@@ -72,15 +70,20 @@
 
         </div>
         <div class="row">
-            <div class="input-field col s10" name="Gatunek" style="margin-bottom: 60px">
+            <div class="input-field col s10" name="Gatunek" style="margin-bottom: 55px">
                 @Html.Label("Gatunek")
             </div>
+            <div class="col s10" style="margin-bottom:10px">
+                <span id="gatun" style="display:none" class="red-text"></span>
+            </div>
+           
+           
             <div class="col l5">
                 @foreach (var g in Model.Genres)
                 {
                     <div class="col l4">
                         <label>
-                            <input type="checkbox" class="filled-in" name="Gatunek" value="@g.Nazwa" />
+                            <input type="checkbox" class="filled-in" name="Gatunek" value="@g.Nazwa" id="gatunki" />
                             <span>@g.Nazwa</span>
                         </label>
 
@@ -95,7 +98,7 @@
 
 
         <div class="col l12">
-            <button class="col btn waves-effect waves-light " type="submit" style="margin-top:40px" value="Create"><i class="material-icons left">send</i>Dodaj</button>
+            <button class="col btn waves-effect waves-light " type="submit" style="margin-top:40px" value="Create" onclick="return validateCheckbox()"><i class="material-icons left" >send</i>Dodaj</button>
 
             <a href="/Movies/Index" class="col offset-l9 waves-light btn-flat" style="margin-top: 40px">
                 Powrót
@@ -109,6 +112,102 @@
 
 <script>
 
+    inter_pl = {
+
+        cancel: 'Anuluj',
+        clear: 'Wyczyść',
+        done: 'Ok',
+        previousMonth: '‹',
+        nextMonth: '›',
+        months: [
+            'Styczeń',
+            'Luty',
+            'Marzec',
+            'Kwiecień',
+            'Maj',
+            'Czerwiec',
+            'Lipiec',
+            'Siepień',
+            'Wrzesień',
+            'Październik',
+            'Listopad',
+            'Grudzień'
+        ],
+        monthsShort: [
+            'Sty',
+            'Lut',
+            'Mar',
+            'Kwi',
+            'Maj',
+            'Cze',
+            'Lip',
+            'Sie',
+            'Wrz',
+            'Paź',
+            'Lis',
+            'Gru'
+        ],
+
+        weekdays: [
+            'Niedziela',
+            'Poniedziałek',
+            'Wtorek',
+            'Środa',
+            'Czwartek',
+            'Piątek',
+            'Sobota'
+        ],
+
+        weekdaysShort: [
+            'Niedz.',
+            'Pon.',
+            'Wt.',
+            'Śr.',
+            'Cz.',
+            'Pt.',
+            'Sob.'
+        ],
+
+        weekdaysAbbrev: ['N', 'P', 'W', 'Ś', 'C', 'P', 'S'],
+
+
+
+    };
+
+    var options = {
+        i18n: inter_pl,
+        format: 'dd.mm.yyyy',    
+        
+    };
+
+
+    var elem = document.querySelector('.datepicker');
+    var instance = M.Datepicker.init(elem, options);
+
+    instance.setDate(new Date());
+
+    //$("#Tytuł").prop('required', true);
+
+    function validateCheckbox() {
+        var n = $("input:checked").length;
+          
+
+        if (n == 0) {
+
+            $("#gatun").css("display", "inline-block");
+            $("#gatun").html("Wymagany co najmniej 1 gatunek!");
+           
+            if (n > 0) {
+                $("#gatun").css("display", "none");
+            }
+            
+            return false;
+        } else {
+            $("#gatun").css("display", "none");           
+            return true;
+        }
+ 
+    }   
 </script>
 
 

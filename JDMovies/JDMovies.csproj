@@ -113,6 +113,7 @@
     <Content Include="Content\js\materialize.min.js" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\spolsz.js" />
     <Content Include="Global.asax" />
     <Content Include="DAL\MoviesDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -201,12 +202,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MoviesDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Validation\Film.cs" />
     <Compile Include="Models\MoviesDeleteViewModel.cs" />
     <Compile Include="Models\MoviesCreateViewModel.cs" />
     <Compile Include="Models\MoviesEditViewModel.cs" />
     <Compile Include="Models\MoviesIndexViewModel.cs" />
-    <Compile Include="Models\Validation\FilmMetadata.cs" />
-    <Compile Include="Models\Validation\PartialClasses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
