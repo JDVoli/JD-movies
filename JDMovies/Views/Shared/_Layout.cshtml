@@ -21,8 +21,8 @@
         <div class="nav-wrapper teal">
             <div class="container">
                 <a class="brand-logo" href="/Movies/Index"> JD Movies</a>               
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <a href="/Movies/Create">Dodaj film</a>                    
+                <ul id="nav-mobile" class="right">
+                    @Html.ActionLink("Dodaj film","Create")                                   
                 </ul>
             </div>
         </div>
@@ -42,7 +42,7 @@
 
         <div class="footer-copyright">
             <div class="container">
-                &copy;2018 - Daniel Jabłoński s15843
+                &copy;2018 - Daniel Jabłoński s15843                
                 <a class="grey-text text-lighten-4 right"
                    href="/JDs/Index">O stronie</a>
             </div>

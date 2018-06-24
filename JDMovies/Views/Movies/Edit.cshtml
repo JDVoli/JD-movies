@@ -22,6 +22,7 @@
             </div>
             <div class="col s7">
                 @{ Html.EnableClientValidation(false);}
+
                 @Html.LabelFor(m => m.Film.Data_premiery)
                 @Html.TextBoxFor(m => m.Film.Data_premiery, new { @Value = Model.Film.Data_premiery.ToString("dd.MM.yyyy"), @class = "datepicker", @id = "pickdate" })
                 @Html.ValidationMessageFor(m => m.Film.Data_premiery)

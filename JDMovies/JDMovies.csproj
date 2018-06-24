@@ -56,6 +56,12 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.3.1.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.3.1\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -113,7 +119,6 @@
     <Content Include="Content\js\materialize.min.js" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\spolsz.js" />
     <Content Include="Global.asax" />
     <Content Include="DAL\MoviesDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -202,6 +207,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MoviesDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Helper\JSON\ChampionDetails.cs" />
+    <Compile Include="Helper\JSON\MatchDetails.cs" />
+    <Compile Include="Helper\JSON\MatchHistory.cs" />
+    <Compile Include="Helper\RitoAPIHelper.cs" />
+    <Compile Include="Models\Glodos.cs" />
     <Compile Include="Models\Validation\Film.cs" />
     <Compile Include="Models\MoviesDeleteViewModel.cs" />
     <Compile Include="Models\MoviesCreateViewModel.cs" />
@@ -241,6 +251,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\JDs\Index.cshtml" />
     <Content Include="Views\Movies\_listOfMovies.cshtml" />
+    <Content Include="Views\JDs\_KrzyczDisunio.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

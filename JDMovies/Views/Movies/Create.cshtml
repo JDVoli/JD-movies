@@ -77,18 +77,19 @@
                 <span id="gatun" style="display:none" class="red-text"></span>
             </div>
            
-           
-            <div class="col l5">
-                @foreach (var g in Model.Genres)
-                {
-                    <div class="col l4">
-                        <label>
-                            <input type="checkbox" class="filled-in" name="Gatunek" value="@g.Nazwa" id="gatunki" />
-                            <span>@g.Nazwa</span>
-                        </label>
+            <div class=" row">
+                <div class="col l5">
+                    @foreach (var g in Model.Genres)
+                    {
+                        <div class="col l4">
+                            <label>
+                                <input type="checkbox" class="filled-in" name="Gatunek" value="@g.Nazwa" id="gatunki" />
+                                <span>@g.Nazwa</span>
+                            </label>
 
-                    </div>
-                }
+                        </div>
+                    }
+                </div>
             </div>
         </div>
 
